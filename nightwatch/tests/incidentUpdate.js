@@ -38,11 +38,8 @@ module.exports = {
 	
 	'Update_Incident': function(browser) {
 		browser
-			.url(baseUrl + '/incident.do?sys_id=a3fafefc0f0c2600114a3b8ce1050e1c')
+			.url(baseUrl + '/incident.do?sys_id=611b094d0f006600114a3b8ce1050e4d')
 			.waitForElementVisible('body', 5000)
-			.waitForElementVisible('[name=incident\\.number]', 2000)
-			.waitForElementVisible('[name=incident\\.category]', 2000)
-			.waitForElementVisible('[name=incident\\.short_description]', 2000);
 
 
 		browser.useXpath();
@@ -60,7 +57,7 @@ module.exports = {
 			.pause(1000);
 		browser
 			.waitForElementVisible('//select[@name=\'incident.impact\']', 1000)
-			.setValue('//select[@name=\'incident.impact\']', '2')
+			.setValue('//select[@name=\'incident.impact\']', '1')
 			.pause(1000);
 		browser
 			.waitForElementVisible('//select[@name=\'incident.urgency\']', 1000)
@@ -70,14 +67,20 @@ module.exports = {
 
 
 		browser.useCss();
-		/*browser
+		browser
 			.waitForElementVisible('[name=sys_display\\.incident\\.caller_id]', 1000)
-			.setValue('[name=sys_display\\.incident\\.caller_id]','Scott Seixas')
-			.pause(1000);*/
+			.clearValue('input[name=sys_display\\.incident\\.caller_id')
+			.setValue('[name=sys_display\\.incident\\.caller_id]','Deepa Shah')
+			.pause(1000);
+
+		var randomNumber = Math.floor((Math.random() * 10000) + 1);
 		browser
 			.waitForElementVisible('[name=incident\\.short_description]', 1000)
-			.setValue('[name=incident\\.short_description]',' - Adding an Update')
+			.clearValue('input[name=incident\\.short_description]')
+			.setValue('[name=incident\\.short_description]','New Short Description ' + randomNumber)
 			.pause(1000);
+		browser
+			.saveScreenshot('/Users/mglenn/' + randomNumber + '.jpg');
 		/*browser
 			.waitForElementVisible('[name=incident\\.activity-stream-work_notes-textarea]', 1000)
 			.setValue('[name=incident\\.activity-stream-work_notes-textarea]','work notes added from selenium test update script')

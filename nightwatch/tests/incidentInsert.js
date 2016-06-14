@@ -40,9 +40,10 @@ module.exports = {
 		browser
 			.url(baseUrl + '/incident.do?')
 			.waitForElementVisible('body', 5000)
-			.waitForElementVisible('[name=incident\\.number]', 2000)
-			.waitForElementVisible('[name=incident\\.category]', 2000)
-			.waitForElementVisible('[name=incident\\.short_description]', 2000);
+			.waitForElementNotVisible('[name=sys_uniqueValue]',2000)
+
+		//get sys_id of record for use later
+		//var sysId = browser.getValue('[name=sys_uniqueValue]').toString();
 
 
 		browser.useXpath();

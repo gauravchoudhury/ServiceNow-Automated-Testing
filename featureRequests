@@ -1,0 +1,5 @@
+move entire login process and info (credentials and baseUrl) to login.js
+after incident submit, reload same record. sys_id of object is sys_uniqueValue 
+can i integrate standard api calls from node to validate that 
+	notifications are being sent out
+	workflows are being moved along in the process
