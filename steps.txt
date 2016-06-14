@@ -1,0 +1,17 @@
+perform the following once
+
+install java 
+	npm install -g nightwatch
+	npm install -g selenium-webdriver
+	npm install -g webdriver-manager
+	webdriver-manager update
+
+perform this before testing session
+
+open powershell session
+	webdriver-manager start
+
+
+	
+open another powershell session insde the nightwatch folder
+	nightwatch --test <path/to/test.js>
