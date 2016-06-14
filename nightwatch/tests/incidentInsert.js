@@ -1,4 +1,23 @@
-//var baseUrl = 'http://helsinki/';
+/*this script opens a new session of your default browser and performs the following
+
+1) Opens and navigates to the login.do page of the specified instance and logs in
+2) Navigates to a blank record on the incident table
+3) fills in the following fields
+	Category
+	Subcategory
+	Caller
+	Contact_Type
+	Impact
+	Urgency
+	Short Description
+	Work Notes
+	Comments
+4) Saves the record (immiates clicking on the Submit button)
+
+
+*/
+
+
 var baseUrl = 'https://dev10392.service-now.com';
 
 var admin_user = 'admin';
@@ -17,9 +36,9 @@ module.exports = {
 			.waitForElementVisible('body', 10000);
 	},
 	
-	'Test Incident Form': function(browser) {
+	'Insert Incident': function(browser) {
 		browser
-			.url(baseUrl + '/incident.do')
+			.url(baseUrl + '/incident.do?')
 			.waitForElementVisible('body', 5000)
 			.waitForElementVisible('[name=incident\\.number]', 2000)
 			.waitForElementVisible('[name=incident\\.category]', 2000)
@@ -31,10 +50,6 @@ module.exports = {
 			.waitForElementVisible('//select[@name=\'incident.subcategory\']', 1000)
 			.setValue('//select[@name=\'incident.category\']', 'network')
 			.pause(1000);
-		/*browser
-			.expect
-			.element('//select[@id=\'incident.subcategory\']/option[text()=\'DNS\']')
-			.present;*/
 		browser
 			.waitForElementVisible('//select[@name=\'incident.subcategory\']', 1000)
 			.setValue('//select[@name=\'incident.subcategory\']', 'dns')
@@ -74,7 +89,8 @@ module.exports = {
 
 		//clicks the submit button on a new record
 		browser
-			.waitForElementVisible('button[id=sysverb_insert]', 1000)
+			.waitForElementVisible('button[id=sysverb_insert]', 1000)	
 			.click('button[id=sysverb_insert]')
 	}
 };
+
