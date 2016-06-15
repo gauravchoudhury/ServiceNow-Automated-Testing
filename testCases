@@ -3,4 +3,31 @@ ISADs
 Priority 0 escalations
 Change Management workflows
 validate user/group assignments
+servicenow catalog
+service portal
 
+
+
+
+		browser  //update caller_id
+			.waitForElementVisible('[name=sys_display\\.incident\\.caller_id]', 1000)
+			.clearValue('input[name=sys_display\\.incident\\.caller_id')
+			.setValue('[name=sys_display\\.incident\\.caller_id]','Deepa Shah')
+			.pause(1000);
+			
+		browser  //update short_description
+			.waitForElementVisible('[name=incident\\.short_description]', 1000)
+			.clearValue('input[name=incident\\.short_description]')
+			.setValue('[name=incident\\.short_description]','New Short Description ' + randomNumber)
+			.pause(1000);
+
+
+		/*browser
+			.waitForElementVisible('//select[@id=\'incident.close_code\']', 1000)
+			.setValue('//select[@id=\'incident.close_code\']', 'Solved (Permanently)')
+			.pause(1000);*/
+		/*browser
+			.waitForElementVisible('[id=incident\\.close_notes]', 1000)
+			.clearValue('input[name=incident\\.close_notes]')
+			.setValue('[name=incident\\.close_notes]','Resolving Incident')
+			.pause(1000);*/

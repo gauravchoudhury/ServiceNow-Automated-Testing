@@ -1,28 +1,9 @@
-/*this script opens a new session of your default browser and performs the following
-
-1) Opens and navigates to the login.do page of the specified instance and logs in
-2) Navigates to record specified on the incident table
-3) Updates the following fields
-	Subcategory
-	Impact
-	Urgency
-	Short Description
-4) Saves the record (immiates clicking on the Update button)
-
-Need to work in the following fields
-	Caller Id
-	Work Notes
-	Comments
-
-
-*/
-
-
 var baseUrl = 'https://dev10392.service-now.com';
 
 var admin_user = 'admin';
 var admin_password = 'Mattyg1245';
 var admin_displayname = 'System Administrator';
+
 
 module.exports = {
 	before : function (browser) {
@@ -36,59 +17,74 @@ module.exports = {
 			.waitForElementVisible('body', 10000);
 	},
 	
-	'Update_Incident': function(browser) {
+	'Update Incident': function(browser) {
 		browser
-			.url(baseUrl + '/incident.do?sys_id=611b094d0f006600114a3b8ce1050e4d')
+			.url(baseUrl + '/incident.do?sys_id=03a12f410fc46600114a3b8ce1050e4c')
 			.waitForElementVisible('body', 5000)
 
-
+		//exclusively use the Xpath locator to locate elements
 		browser.useXpath();
-		browser
+
+		browser  //locate the Incident State field and set it to 'In Progress'
+			.waitForElementVisible('//select[@name=\'incident.state\']', 1000)
+			.setValue('//select[@name=\'incident.state\']', '2')
+			.pause(1000);
+
+		browser  //locate the Category field and set it to 'Hardware'
+			.waitForElementVisible('//select[@name=\'incident.category\']', 1000)
+			.setValue('//select[@name=\'incident.category\']', 'hardware')
+			.pause(1000);
+
+		browser  //locate the Subcategory field and set it to 'Disk'
 			.waitForElementVisible('//select[@name=\'incident.subcategory\']', 1000)
-			.setValue('//select[@name=\'incident.category\']', 'network')
+			.setValue('//select[@name=\'incident.subcategory\']', 'disk')
 			.pause(1000);
-		browser
-			.waitForElementVisible('//select[@name=\'incident.subcategory\']', 1000)
-			.setValue('//select[@name=\'incident.subcategory\']', 'dns')
-			.pause(1000);
-		browser
-			.waitForElementVisible('//select[@name=\'incident.contact_type\']', 1000)
-			.setValue('//select[@name=\'incident.contact_type\']', 'self-service')
-			.pause(1000);
-		browser
+
+		browser  //locate the Impact field and set it to '2'
 			.waitForElementVisible('//select[@name=\'incident.impact\']', 1000)
-			.setValue('//select[@name=\'incident.impact\']', '1')
+			.setValue('//select[@name=\'incident.impact\']', '2')
 			.pause(1000);
-		browser
+
+		browser  //locate the Urgency field and set it to '1'
 			.waitForElementVisible('//select[@name=\'incident.urgency\']', 1000)
-			.setValue('//select[@name=\'incident.urgency\']', '3')
+			.setValue('//select[@name=\'incident.urgency\']', '1')
 			.pause(1000);
 
 
 
+		//exclusively use the useCss locator to locate elements
 		browser.useCss();
-		browser
-			.waitForElementVisible('[name=sys_display\\.incident\\.caller_id]', 1000)
-			.clearValue('input[name=sys_display\\.incident\\.caller_id')
-			.setValue('[name=sys_display\\.incident\\.caller_id]','Deepa Shah')
+
+		browser  //locate the Assignment Group field and set it to the 'Service Desk'
+			.waitForElementVisible('[name=sys_display\\.incident\\.assignment_group]', 2000)
+			.clearValue('input[name=sys_display\\.incident\\.assignment_group]')
+			.setValue('[name=sys_display\\.incident\\.assignment_group]','Service Desk')
 			.pause(1000);
 
-		var randomNumber = Math.floor((Math.random() * 10000) + 1);
-		browser
-			.waitForElementVisible('[name=incident\\.short_description]', 1000)
-			.clearValue('input[name=incident\\.short_description]')
-			.setValue('[name=incident\\.short_description]','New Short Description ' + randomNumber)
+		browser  //locate the Assigned To field and set it to 'ITIL User'
+			.waitForElementVisible('[name=sys_display\\.incident\\.assigned_to]', 2000)
+			.clearValue('input[name=sys_display\\.incident\\.assigned_to]')
+			.setValue('[name=sys_display\\.incident\\.assigned_to]','ITIL User')
 			.pause(1000);
+
+		//randomly generate either a 0 or 1
+		var randomNumber = Math.floor((Math.random() * 10000) + 1);
+
+		browser  //locate the Work Notes field and add the string below
+			.waitForElementVisible('[id=activity-stream-work_notes-textarea]', 1000)
+			.setValue('[id=activity-stream-work_notes-textarea]','Work Note added from Selenium test update script')
+			.pause(1000);
+
+		browser  //locate the Comments field and add the string below
+			.waitForElementVisible('[id=activity-stream-comments-textarea]', 1000)
+			.setValue('[id=activity-stream-comments-textarea]','Customer Comment added from Selenium test update script')
+			.pause(1000);
+
+
+
+		//take screenshot of the whole thing
 		browser
 			.saveScreenshot('/Users/mglenn/' + randomNumber + '.jpg');
-		/*browser
-			.waitForElementVisible('[name=incident\\.activity-stream-work_notes-textarea]', 1000)
-			.setValue('[name=incident\\.activity-stream-work_notes-textarea]','work notes added from selenium test update script')
-			.pause(1000);
-		browser
-			.waitForElementVisible('[name=activity-stream-comments-textarea]', 1000)
-			.setValue('[name=activity-stream-comments-textarea]','comments added from selenium test update script')
-			.pause(1000);*/
 
 		//clicks the submit button on a new record
 		browser
