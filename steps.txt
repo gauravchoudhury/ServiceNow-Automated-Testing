@@ -8,10 +8,11 @@ install java
 
 perform this before testing session
 
-open powershell session
+open powershell or terminal session
+
 	webdriver-manager start
 
 
 	
-open another powershell session insde the nightwatch folder
+open another powershell or terminal session inside the nightwatch folder
 	nightwatch --test <path/to/test.js>
