@@ -25,10 +25,11 @@ module.exports = {
 		var termArray = ['12','24','36'];
 		var term = termArray[Math.floor(Math.random() * termArray.length)];
 
-		var priceArray = ['249.00','250.00','499.00','501.00','999.00','1001.00'];
+		var mrcArray = ['349.99','350.00','350.01'];
+		var mrc = mrcArray[Math.floor(Math.random() * mrcArray.length)];
 
-		var mrc = priceArray[Math.floor(Math.random() * priceArray.length)];
-		var nrc = priceArray[Math.floor(Math.random() * priceArray.length)];
+		var nrcArray = ['1999.99','2000.00','2000.01'];
+		var nrc = nrcArray[Math.floor(Math.random() * nrcArray.length)];
 
 		var orderNum = Math.floor((Math.random() * 100000) + 1);
 
@@ -85,7 +86,6 @@ module.exports = {
 			//upon reload of the form, wait for certain elements to load
 			.waitForElementVisible('body', 5000)
 
-
 		    //clicks the Request Approval button on a new record
 			.waitForElementVisible('button[id=request_approval]', 1000)	
 			.click('button[id=request_approval]')
@@ -94,7 +94,7 @@ module.exports = {
 	},
 
 	
-	'Select Random Approval and, well, Approve it!!': function(browser) {
+	'First Round of Approvals - Net Logistics': function(browser) {
 
 		browser
 			//upon reload of the form, wait for certain elements to load
@@ -107,17 +107,94 @@ module.exports = {
 			.click('button[id=approve_ckt]')
 			.pause(500)
 	           
+	},
+
+	'Second Round of Approvals - Vendor Performance': function(browser) {
+
+		browser
+			//upon reload of the form, wait for certain elements to load
+            .waitForElementVisible('body', 1000)
+
+			//clicks the 'Approve' button on the current record. 
+			//This UI Action will allow any admin account to approved
+			//even if they are not an approver for that record
+			.waitForElementVisible('button[id=approve_ckt]', 1000)	
+			.click('button[id=approve_ckt]')
+			.pause(500)
+	           
+	},
+
+	'Third Round of Approvals - Net Ops Management': function(browser) {
+
+		browser
+			//upon reload of the form, wait for certain elements to load
+            .waitForElementVisible('body', 1000)
+
+			//clicks the 'Approve' button on the current record. 
+			//This UI Action will allow any admin account to approved
+			//even if they are not an approver for that record
+			.waitForElementVisible('button[id=approve_ckt]', 1000)	
+			.click('button[id=approve_ckt]')
+			.pause(500)
+	           
+	},
+
+	'Fourth Round of Approvals (If Necessary) - Tech Ops Management': function(browser) { 
+
+		browser
+			//upon reload of the form, wait for certain elements to load
+			.waitForElementVisible('body', 1000)
+
+			//checks the value of the MRC (u_price) and NRC (u_nrc) field values
+			//if the following are true, another approval is triggered which we'll check
+			//u_state = 'Ready for Approval' (20) && (u_price > 350 || u_nrc > 2000)
+			.getValue('[id=u_circuit_provisioning\\.u_price\\.display]',function(mrcResult){
+				if(mrcResult.value >= '350.00'){
+					browser.waitForElementVisible('button[id=approve_ckt]', 1000)	
+					browser.click('button[id=approve_ckt]')
+					console.log('Approval','')
+					browser.pause(500)
+				}
+				else {
+					browser.getValue('[id=u_circuit_provisioning\\.u_nrc\\.display]',function(nrcResult){
+						if(nrcResult.value >= '2000.00'){
+							browser.waitForElementVisible('button[id=approve_ckt]', 1000)	
+							browser.click('button[id=approve_ckt]')
+							browser.pause(500)
+						}
+					})
+				}
+			})
+	},
+
+
+	"Validate 'Final Docs' TKT": function(browser){
+
+		//query the api for a newly created TKT with the CKT as it's parent thats assigned to Vendor Performance and a state of 'Open'
+		//open a new window, going to the TKT we discovered
+		//set priority and set to closed-complete
+	},
+
+
+	"Validate 'Circuit Provisioning Order' TKT": function(browser){
+
+		//validate the state/stage of the CKT are set to in progress
+		//query the api for a newly created TKT with the CKT as it's parent thats assigned to Network and a state of 'Open'
+		//open a new window, going to the TKT we discovered
+		//set priority and set to closed-complete
+	},
+
+	"Validate 'Order State' & 'Stage' fields": function(browser){
+
+		//navigate to the circuit provisioning request
+		//verify the stage and order state fields are 'complete'
 	}
 
-		
-		//dependent on the values for NRC and MRC, recurse through this process x amount of times
+
+
+		//check the workflow stages
 		//check the breadcrumb stages (Request, Awaiting Approval, etc...)
 		//grab the sysd of the current record once it's been detected
-		//after we request approval, we need to redirect to the previous record
-		//need to find the approval section
-		//locate any <a> with the class of 'linked formlink' and an innerText value of 'requested'
-		//pick a random occurrance that matches the above condition
-		//once loaded, click on the approve button on the sys_approval form and close the tab
-		//reload page once we're back on the circuit provisioning form and check for approvals again
+
 	
 }

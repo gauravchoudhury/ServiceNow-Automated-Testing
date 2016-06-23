@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
             failures="0"
-            tests="4">
+            tests="10">
 
   <testsuite name="crossConnectTKT"
     errors="0" failures="0" hostname="" id="" package="crossConnectTKT" skipped="0"
-    tests="4" time="31.83" timestamp="Wed, 22 Jun 2016 23:48:15 GMT">
+    tests="10" time="49.62" timestamp="Thu, 23 Jun 2016 16:07:48 GMT">
   
-    <testcase name="Testing Login and redirect to /nav_to.do" time="11.80" assertions="7">
+    <testcase name="Testing Login and redirect to /nav_to.do" time="18.05" assertions="7">
 
     
 
@@ -24,7 +24,7 @@
     
     </testcase>
   
-    <testcase name="Insert Circuit Provisioning Ticket" time="9.328" assertions="8">
+    <testcase name="Insert Circuit Provisioning Ticket" time="9.849" assertions="8">
 
     
 
@@ -43,18 +43,48 @@
     
     </testcase>
   
-    <testcase name="Request Approval" time="7.926" assertions="2">
+    <testcase name="Request Approval" time="8.379" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="Select Random Approval and, well, Approve it!!" time="2.775" assertions="2">
+    <testcase name="First Round of Approvals - Net Logistics" time="2.937" assertions="2">
 
     
 
     
+    </testcase>
+  
+    <testcase name="Second Round of Approvals - Vendor Performance" time="3.160" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Third Round of Approvals - Net Ops Management" time="3.261" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Fourth Round of Approvals (If Necessary) - Tech Ops Management" time="3.986" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Validate &#39;Final Docs&#39; TKT" time="0.001000" assertions="0">
+    </testcase>
+  
+    <testcase name="Validate &#39;Circuit Provisioning Order&#39; TKT" time="0.001000" assertions="0">
+    </testcase>
+  
+    <testcase name="Validate &#39;Order State&#39; &amp; &#39;Stage&#39; fields" time="0.002000" assertions="0">
     </testcase>
   
   

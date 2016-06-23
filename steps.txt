@@ -16,3 +16,5 @@ open powershell or terminal session
 	
 open another powershell or terminal session inside the nightwatch folder
 	nightwatch --test <path/to/test.js>
+
+	nightwatch --config ./nightwatch.json --env chrome
